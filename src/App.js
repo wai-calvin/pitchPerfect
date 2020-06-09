@@ -14,6 +14,11 @@ function App() {
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
   });
 
+  function playSound() {
+    const audio = document.getElementsByClassName("audio-element")[0];
+    audio.play();
+  }
+
   return (
     <div>
       <Piano
@@ -27,7 +32,10 @@ function App() {
         width={1000}
         keyboardShortcuts={keyboardShortcuts}
       />
-      <button type="button" onClick={()=>{this.onClick()}}>Play Note</button>
+      <button type="button" onClick={playSound}>Play Note</button>
+      <audio className="audio-element">
+        <source src="sounds/C.wav"></source>
+      </audio>
     </div>
     // <Piano
     //   noteRange={{ first: firstNote, last: lastNote }}
