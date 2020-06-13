@@ -15,7 +15,29 @@ function App() {
   });
 
   function playSound() {
-    const audio = document.getElementsByClassName("audio-element")[0];
+    // Array of sounds for each piano key
+    const pianoSounds = [
+      "sounds/A.wav",
+      "sounds/ASharp.wav",
+      "sounds/B.wav",
+      "sounds/C.wav",
+      "sounds/CSharp.wav",
+      "sounds/D.wav",
+      "sounds/DSharp.wav",
+      "sounds/E.wav",
+      "sounds/F.wav",
+      "sounds/FSharp.wav",
+      "sounds/G.wav",
+      "sounds/GSharp.wav",
+    ];
+    // Generate a random note from the sounds array
+    const randomNote = pianoSounds[Math.floor(Math.random() * pianoSounds.length)];
+    // Get the audio element
+    const audio = document.querySelector(".piano-audio");
+    // Set the src of the source within the audio element to the random note
+    audio.querySelector(".piano-note").setAttribute("src", randomNote);
+    // Load and play the audio
+    audio.load();
     audio.play();
   }
 
@@ -32,9 +54,10 @@ function App() {
         width={1000}
         keyboardShortcuts={keyboardShortcuts}
       />
+      {/* Clicking the button will play any one of the sounds below */}
       <button type="button" onClick={playSound}>Play Note</button>
-      <audio className="audio-element">
-        <source src="sounds/C.wav"></source>
+      <audio className="piano-audio">
+        <source className="piano-note" src="" type="audio/wav"></source>
       </audio>
     </div>
     // <Piano
