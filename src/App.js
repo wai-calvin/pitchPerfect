@@ -52,9 +52,10 @@ class App extends React.Component {
   playRandomSound() {
     // Generate a random note from the sounds array
     const randomNoteIndex = Math.floor(Math.random() * pianoSounds.length);
+    this.setState({randomSound: pianoSounds[randomNoteIndex]}, function() {
+      console.log("Random State " + this.state["randomSound"]);
+    });
     this.playSound(randomNoteIndex, ".random-piano-audio");
-    this.setState({randomSound: pianoSounds[randomNoteIndex]});
-    console.log("Random State " + this.state.randomSound);
   }
 
   render() {
@@ -65,9 +66,15 @@ class App extends React.Component {
           playNote={(midiNumber) => {
             // Play a given note - see notes below
             // console.log(`Played ${pianoSounds[midiNumber - firstNote]}`)
+            this.setState({userSound: pianoSounds[midiNumber - firstNote]}, function() {
+              console.log("User State " + this.state["userSound"]);
+              if (this.state["userSound"] === this.state["randomSound"]) {
+                console.log("Correct!");
+              } else {
+                console.log("Sorry, try again!");
+              }
+            });
             this.playSound(midiNumber - firstNote, ".piano-component-audio");
-            this.setState({userSound: pianoSounds[midiNumber - firstNote]});
-            console.log("User State " + this.state.userSound);
           }}
           stopNote={(midiNumber) => {
             // Stop playing a given note - see notes below
