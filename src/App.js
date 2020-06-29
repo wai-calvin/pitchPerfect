@@ -32,11 +32,15 @@ class App extends React.Component {
     super(props);
     this.playSound = this.playSound.bind(this);
     this.playRandomSound = this.playRandomSound.bind(this);
+    this.resetAll = this.resetAll.bind(this);
 
     this.state = {
       userSound: '',
-      randomSound: ''
-    }
+      randomSound: '',
+      disabledButton: true,
+      playButton: false,
+      message: '',
+     }
   }
 
   playSound(index, audioClass) {
@@ -47,6 +51,8 @@ class App extends React.Component {
     // Load and play the audio
     audio.load();
     audio.play();
+    this.setState({disabledButton: false, playButton: true});
+  
   }
 
   playRandomSound() {
@@ -56,6 +62,14 @@ class App extends React.Component {
       console.log("Random State " + this.state["randomSound"]);
     });
     this.playSound(randomNoteIndex, ".random-piano-audio");
+  }
+
+  resetAll() {
+    this.setState({
+      disabledButton: true, 
+      playButton: false,
+      message: ''
+    });
   }
 
   render() {
@@ -69,8 +83,9 @@ class App extends React.Component {
             this.setState({userSound: pianoSounds[midiNumber - firstNote]}, function() {
               console.log("User State " + this.state["userSound"]);
               if (this.state["userSound"] === this.state["randomSound"]) {
-                console.log("Correct!");
+                this.setState({message: "Correct!"})
               } else {
+                this.setState({message: "Sorry, try again!"})
                 console.log("Sorry, try again!");
               }
             });
@@ -85,7 +100,11 @@ class App extends React.Component {
           keyboardShortcuts={keyboardShortcuts}
         />
         {/* Clicking the button will play any one of the sounds below */}
-        <button type="button" onClick={this.playRandomSound}>Play Note</button>
+        <button type="button" onClick={this.playRandomSound} disabled={this.state.playButton}>Play Note</button>
+        <button disabled={this.state.disabledButton} onClick={this.resetAll}>Play Again</button>
+
+        <p>{this.state.message}</p>
+
         <audio className="random-piano-audio">
           <source className="piano-note" src="" type="audio/wav"></source>
         </audio>
