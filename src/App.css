@@ -1,4 +1,35 @@
-.App {
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.buttons {
+  display:flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.firstButton {
+  background-color: white;
+  color: black;
+}
+
+.secondButton {
+  background-color: black;
+  color: white;
+}
+
+.piano {
+  display: flex;
+  align-items: center;
+  margin-left: 170px;
+}
+
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +66,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
