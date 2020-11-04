@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import 'react-piano/dist/styles.css';
 
@@ -73,49 +72,53 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        
-        {/* Clicking the button will play any one of the sounds below */}
-        <div className="buttons">
-          <button type="button" onClick={this.playRandomSound} disabled={this.state.playButton} className="firstButton">Play Note</button>
-          <button disabled={this.state.disabledButton} onClick={this.resetAll} className="secondButton">Play Again</button>   
+      <div className="App">
+        <div className="title">
+            <h1 className="name">Pitch Perfect</h1>
         </div>
+        <div className="container"> 
+          {/* Clicking the button will play any one of the sounds below */}
+          <div className="buttons">
+            <button type="button" onClick={this.playRandomSound} disabled={this.state.playButton} className="firstButton">Play Note</button>
+            <button disabled={this.state.disabledButton} onClick={this.resetAll} className="secondButton">Play Again</button>   
+          </div>
 
-        <div className="piano">
-          <Piano
-            noteRange={{ first: firstNote, last: lastNote }}
-            playNote={(midiNumber) => {
-              // Play a given note - see notes below
-              // console.log(`Played ${pianoSounds[midiNumber - firstNote]}`)
-              this.setState({userSound: pianoSounds[midiNumber - firstNote]}, function() {
-                console.log("User State " + this.state["userSound"]);
-                if (this.state["userSound"] === this.state["randomSound"]) {
-                  this.setState({message: "Correct!"})
-                } else {
-                  this.setState({message: "Sorry, try again!"})
-                  console.log("Sorry, try again!");
-                }
-              });
-              this.playSound(midiNumber - firstNote, ".piano-component-audio");
-            }}
-            stopNote={(midiNumber) => {
-              // Stop playing a given note - see notes below
-              // const audio = document.querySelector(".piano-component-audio");
-              // audio.pause();
-            }}
-            width={750}
-            keyboardShortcuts={keyboardShortcuts}
-          />
+          <div className="piano">
+            <Piano
+              noteRange={{ first: firstNote, last: lastNote }}
+              playNote={(midiNumber) => {
+                // Play a given note - see notes below
+                // console.log(`Played ${pianoSounds[midiNumber - firstNote]}`)
+                this.setState({userSound: pianoSounds[midiNumber - firstNote]}, function() {
+                  console.log("User State " + this.state["userSound"]);
+                  if (this.state["userSound"] === this.state["randomSound"]) {
+                    this.setState({message: "Correct!"})
+                  } else {
+                    this.setState({message: "Sorry, try again!"})
+                    console.log("Sorry, try again!");
+                  }
+                });
+                this.playSound(midiNumber - firstNote, ".piano-component-audio");
+              }}
+              stopNote={(midiNumber) => {
+                // Stop playing a given note - see notes below
+                // const audio = document.querySelector(".piano-component-audio");
+                // audio.pause();
+              }}
+              width={750}
+              keyboardShortcuts={keyboardShortcuts}
+            />
+          </div>
+
+          <p>{this.state.message}</p>
+
+          <audio className="random-piano-audio">
+            <source className="piano-note" src="" type="audio/wav"></source>
+          </audio>
+          <audio className="piano-component-audio">
+            <source className="piano-note" src="" type="audio/wav"></source>
+          </audio>
         </div>
-
-        <p>{this.state.message}</p>
-
-        <audio className="random-piano-audio">
-          <source className="piano-note" src="" type="audio/wav"></source>
-        </audio>
-        <audio className="piano-component-audio">
-          <source className="piano-note" src="" type="audio/wav"></source>
-        </audio>
       </div>
     );
   }
